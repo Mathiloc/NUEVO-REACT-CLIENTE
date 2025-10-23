@@ -1,0 +1,79 @@
+/* 1. Fondo y Tipografía Global */
+body, #root {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+   
+    font-family: 'Montserrat', 'Arial Black', sans-serif; 
+    background-color: #34495e; /* Fondo Gris Oscuro */
+}
+
+
+.home-container {
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+    justify-content: center; 
+    min-height: 100vh; 
+    text-align: center;
+    padding: 30px;
+}
+
+
+.home-container h2 {
+    color: white; 
+    margin-top: 25px;
+    font-size: 2.5em; 
+    font-weight: 800; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); 
+}
+
+.home-container p {
+    color: #eee; /* Gris claro */
+    font-size: 1.5em;
+    margin-bottom: 35px;
+    font-weight: 600;
+}
+
+/* 4. Estilos para el Contenedor de Botones */
+.home-container div {
+    display: flex;
+    flex-direction: column; /* Apilamos los botones verticalmente, como hace Kahoot! en ciertas vistas */
+    gap: 15px; /* Espacio entre los botones */
+    width: 90%; /* Ancho para que los botones sean grandes */
+    max-width: 350px; /* Ancho máximo estándar para un botón de Kahoot! */
+}
+
+/* 5. Estilos Generales de Botón */
+.home-container button {
+    padding: 15px 30px;
+    font-size: 1.5em; /* Botones muy grandes */
+    font-weight: 800;
+    color: white;
+    border: none;
+    border-radius: 8px; 
+    cursor: pointer;
+    transition: background-color 0.1s ease, transform 0.1s;
+    box-shadow: 0 5px 0px 0px rgba(0, 0, 0, 0.5); /* Sombra que simula el 3D */
+}
+
+/* 6. Colores Kahoot! Específicos para los Botones */
+/* Botón Ser Anfitrión (Host) - Lo más cercano al AZUL de Kahoot! */
+.home-container button:first-child {
+    background-color: #3f68a5; /* Azul medio oscuro */
+    box-shadow: 0 5px 0px 0px #2a4975; /* Sombra más oscura */
+}
+
+/* Botón Ser Jugador (Player) - Lo más cercano al AMARILLO de Kahoot! */
+.home-container button:last-child {
+    background-color: #e8a200; /* Amarillo/Naranja brillante */
+    box-shadow: 0 5px 0px 0px #b88200; /* Sombra más oscura */
+}
+
+/* Efecto al hacer click (para simular el "hundimiento" del botón) */
+.home-container button:active {
+    transform: translateY(5px); /* Se mueve 5px hacia abajo */
+    box-shadow: none;           /* La sombra desaparece */
+}

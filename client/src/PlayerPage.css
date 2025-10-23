@@ -1,0 +1,227 @@
+
+
+.question-display-box {
+    background-color: #3498db; /* Azul Kahoot! */
+    padding: 30px 40px; /* Espaciado interno */
+    border-radius: 15px; /* Bordes redondeados */
+    margin-bottom: 40px; /* Espacio debajo de la caja */
+    box-shadow: 0 10px 0px 0px #2980b9; /* Sombra para efecto 3D */
+    width: 90%; /* Ancho de la caja */
+    max-width: 800px; /* Ancho máximo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+}
+
+/* El texto de la pregunta dentro de la caja */
+.question-display-box .question-text-player {
+    color: white; /* Texto blanco */
+    font-size: 2.2em; /* Tamaño de fuente grande */
+    font-weight: 800;
+    margin: 0; /* Elimina márgenes extra del h1 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    line-height: 1.3; 
+}
+
+/* Modificación necesaria para el contenedor de la pregunta */
+.question-text-player {
+    /* La clase base debe ser simple y se sobrescribe dentro de question-display-box */
+    font-size: 1.6em; /* Mantener la base para otras vistas */
+    padding: 15px;
+    color: #bdc3c7;
+    margin-bottom: 0; /* Eliminado el margen que generaría doble espacio */
+}
+.app-button-3d {
+    padding: 18px 30px;
+    font-size: 1.6em; 
+    font-weight: 800;
+    color: white;
+    border: none;
+    border-radius: 10px; 
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 0 7px 0px 0px rgba(0, 0, 0, 0.5); /* Sombra 3D */
+    width: 90%;
+    max-width: 400px;
+    margin: 15px 0;
+}
+
+
+/* Efecto Click */
+.app-button-3d:active {
+    transform: translateY(7px);
+    box-shadow: none;
+}
+/* 1. Contenedor Base */
+.player-container {
+    background-color: #2c3e50; /* Azul oscuro */
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px; 
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+}
+
+.kahoot-title-player {
+    font-size: 2.8em;
+    font-weight: 900;
+    margin-bottom: 25px;
+    color: #f1c40f;
+}
+
+/* 2. Estilos del Formulario de Ingreso (Entry View) */
+.join-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 90%;
+    max-width: 400px;
+    margin-bottom: 25px;
+}
+
+.pin-input, .nickname-input {
+    padding: 18px 15px; /* Más padding */
+    font-size: 1.3em;
+    border: 3px solid #7f8c8d; /* Borde más visible */
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 600;
+    background-color: #ecf0f1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.join-button {
+    background-color: #2ecc71;
+    color: white;
+    padding: 18px;
+    font-size: 1.6em;
+    font-weight: 800;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 6px 0px 0px #27ae60;
+    transition: all 0.15s ease;
+}
+
+.join-button:active {
+    transform: translateY(6px);
+    box-shadow: none;
+}
+
+.back-button {
+    background-color: #e74c3c; /* Rojo brillante */
+    color: white;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 20px;
+    box-shadow: 0 4px 0px 0px #c0392b;
+}
+.back-button:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
+/* 3. Estilos de la Vista del Juego (Game View) */
+.question-text-player {
+    /* El jugador no ve la pregunta, solo el color/forma. 
+       Este estilo se usará si decides mostrar un mensaje como '¡Elige tu respuesta!' */
+    font-size: 1.6em;
+    padding: 15px;
+    color: #bdc3c7;
+    margin-bottom: 25px;
+}
+.countdown {
+    font-size: 1.1em;
+    padding: 15px;
+    color: #bdc3c7;
+    margin-top: 0; 
+    /* CLAVE: Reducir el valor para que los botones estén más cerca */
+    margin-bottom: 30px; /* Cambia de 50px (ejemplo anterior) a un valor menor */
+}
+
+.answer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: 1fr 1fr;
+    gap: 15px;
+    width: 100%; /* Ocupa todo el ancho disponible */
+    max-width: 650px;
+    margin-top: 40px;
+    flex-grow: 1; /* Permite que la cuadrícula ocupe el espacio restante */
+    margin-bottom: 20px;
+}
+
+.answer-button {
+    height: 200px; /* Botones aún más grandes para el tacto */
+    border: none;
+    border-radius: 10px;
+    font-size: 2em;
+    font-weight: 900;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 8px 0px 0px rgba(0, 0, 0, 0.4);
+    transition: transform 0.15s ease, opacity 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Colores de las opciones de respuesta */
+.answer-button.color-0 { 
+    background-color: #e74c3c; /* ROJO */
+    box-shadow: 0 8px 0px 0px #c0392b;
+}
+.answer-button.color-1 { 
+    background-color: #3498db; /* AZUL */
+    box-shadow: 0 8px 0px 0px #2980b9;
+}
+.answer-button.color-2 { 
+    background-color: #f1c40f; /* AMARILLO */
+    box-shadow: 0 8px 0px 0px #f39c12;
+}
+.answer-button.color-3 { 
+    background-color: #2ecc71; /* VERDE */
+    box-shadow: 0 8px 0px 0px #27ae60;
+}
+
+.answer-button:active:not(:disabled) {
+    transform: translateY(8px); /* Hundimiento más profundo */
+    box-shadow: none;
+}
+
+.answer-button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    background-color: #7f8c8d !important; 
+    box-shadow: 0 4px 0px 0px #6c757d !important;
+}
+
+.feedback-message {
+    font-size: 1.4em;
+    margin-top: 30px;
+    font-weight: 700;
+    color: #f1c40f;
+}
+
+/* 4. Estilos para el Lobby del Jugador (Esperando juego) */
+.waiting-box {
+    background-color: #34495e;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 450px;
+    margin-top: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+.waiting-box h2 {
+    color: #ecf0f1;
+    font-size: 1.8em;
+}

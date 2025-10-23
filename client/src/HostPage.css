@@ -1,0 +1,154 @@
+/* ---------------------------------------------------- */
+/* HOST PAGE STYLES - FINAL */
+/* ---------------------------------------------------- */
+
+/* 1. Contenedor Principal: Asegura el Centrado y el Fondo */
+.host-container {
+    /* HEREDA centrado y min-height de .app-container si lo tienes en App.css */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* CLAVE para el centrado vertical */
+    min-height: 100vh;
+    padding: 30px;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    background-color: #2c3e50; /* Azul oscuro profesional */
+    color: white;
+}
+
+/* 2. Títulos y Cabeceras */
+.host-container h1 {
+    font-size: 3.8em;
+    font-weight: 900;
+    margin-bottom: 25px;
+    color: #f1c40f; /* Amarillo fuerte */
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.7);
+}
+
+.host-container h2, .host-container h3 {
+    font-size: 2.2em;
+    color: #ecf0f1; /* Gris claro */
+    margin: 15px 0;
+}
+.host-container h3 {
+    font-size: 1.8em;
+}
+
+/* 3. Estilos del PIN de Partida (LOBBY) */
+.pin-display {
+    background: linear-gradient(145deg, #ecf0f1, #bdc3c7); /* Gradiente sutil */
+    color: #2c3e50;
+    padding: 25px 60px;
+    border-radius: 18px;
+    margin: 40px 0;
+    box-shadow: 0 12px 0px 0px #95a5a6; /* Sombra "3D" marcada */
+    border: 5px solid #34495e;
+}
+
+.pin-display h2 {
+    color: #7f8c8d;
+    font-size: 1.6em;
+    margin-bottom: 8px;
+}
+
+.pin-number {
+    font-size: 7em;
+    font-weight: 900;
+    margin: 10px 0;
+    color: #27ae60; /* Verde brillante para el PIN */
+}
+
+/* 4. Lista de Jugadores (Lobby y Resultados) */
+.player-list-lobby {
+    list-style: none;
+    padding: 0;
+    width: 90%;
+    max-width: 500px;
+    margin-bottom: 20px;
+}
+
+.player-list-lobby li {
+    background-color: #34495e; 
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #ecf0f1;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* 5. Vista de Pregunta Activa */
+.question-container {
+    width: 90%;
+    max-width: 900px;
+    margin-bottom: 30px;
+}
+
+.question-container h1 {
+    font-size: 3em;
+    padding: 40px;
+    background-color: #3498db; /* Azul vibrante para la pregunta */
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+/* Caja de Estadísticas (Respuestas recibidas, Puntajes en vivo) */
+.question-stats-box {
+    background-color: #34495e;
+    padding: 25px;
+    border-radius: 12px;
+    margin-top: 30px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* 6. Estilos Globales de Botones (Efecto "Push") */
+.host-button {
+    padding: 18px 35px;
+    font-size: 1.6em;
+    font-weight: 800;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 0 7px 0px 0px rgba(0, 0, 0, 0.5); /* Sombra 3D */
+    margin: 20px 10px;
+    width: 95%;
+    max-width: 380px;
+}
+
+/* Color Azul/Verde (Primary: Crear, Iniciar) */
+.host-button-primary {
+    background-color: #2ecc71; /* Verde esmeralda */
+    box-shadow: 0 7px 0px 0px #27ae60;
+}
+.host-button-primary:hover {
+    background-color: #27ae60;
+}
+
+/* Color Naranja/Amarillo (Secondary: Siguiente Pregunta, Mostrar Puntuaciones) */
+.host-button-secondary {
+    background-color: #e67e22; /* Naranja zanahoria */
+    box-shadow: 0 7px 0px 0px #d35400;
+}
+.host-button-secondary:hover {
+    background-color: #d35400;
+}
+
+/* Efecto Click (Hundimiento) */
+.host-button:active {
+    transform: translateY(7px);
+    box-shadow: none; /* La sombra desaparece al hundirse */
+}
+
+.host-button:disabled {
+    background-color: #7f8c8d;
+    box-shadow: 0 4px 0px 0px #6c757d;
+    cursor: not-allowed;
+}
