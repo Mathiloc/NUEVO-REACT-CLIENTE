@@ -12,6 +12,8 @@ function HomePage({ setView }) {
 
 // si ya tienes un style porque agregas mas estilos en linea? mejor ponelo todo en el css
 
+// la imagen debe ir en una carpeta img (o somos dueños del dominio de la imagen?)
+
     <div className="home-container" >
       <img
         src="https://i.ibb.co/3YWQn17F/Logo-Verde.png"
