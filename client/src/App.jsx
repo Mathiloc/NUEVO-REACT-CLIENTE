@@ -4,9 +4,18 @@ import HomePage from './pages/HomePage';
 import HostPage from './pages/HostPage';
 import PlayerPage from './pages/PlayerPage';
 
-function App() {
-  const [view, setView] = useState('home'); // 'home', 'host', o 'player'
 
+//tienes un useState('home') sin embargo este valor siempre se reinicia al recargar la pagina y sera 'home' 
+
+// se debe agregar la logica de verificacion de sesion en el GlobalContext.jsx , posiblemente con un useEffect porque debe hacerse una llamada a la API, lo que lo vuelve asincronico
+
+// con lo que cambia el useState para retomar la sesion si es que existe
+
+
+
+
+function App() {
+  const [view, setView] = useState('home');  
   const renderView = () => {
     switch (view) {
       case 'host':
@@ -14,7 +23,6 @@ function App() {
       case 'player':
         return <PlayerPage />;
       default:
-        // Pasamos la función `setView` para poder cambiar la vista desde HomePage
         return <HomePage setView={setView} />; 
     }
   };

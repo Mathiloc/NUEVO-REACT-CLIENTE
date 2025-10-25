@@ -3,9 +3,15 @@ import React from 'react';
 import '../HomePage.css';
 
 
+//esta pagina se mantiene igual porque en la vista padre manejas el estado de la vista actual
+
+
 function HomePage({ setView }) {
   return (
     
+
+// si ya tienes un style porque agregas mas estilos en linea? mejor ponelo todo en el css
+
     <div className="home-container" >
       <img
         src="https://i.ibb.co/3YWQn17F/Logo-Verde.png"
