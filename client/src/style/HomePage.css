@@ -8,7 +8,11 @@ body, #root {
     font-family: 'Montserrat', 'Arial Black', sans-serif; 
     background-color: #34495e; /* Fondo Gris Oscuro */
 }
-
+.home-logo{
+    width: 250px;
+    height: auto;
+    margin-bottom: 30px;
+}
 
 .home-container {
   

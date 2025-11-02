@@ -37,13 +37,13 @@
 
 /* 3. Estilos del PIN de Partida (LOBBY) */
 .pin-display {
-    background: linear-gradient(145deg, #ecf0f1, #bdc3c7); /* Gradiente sutil */
-    color: #2c3e50;
-    padding: 25px 60px;
-    border-radius: 18px;
-    margin: 40px 0;
-    box-shadow: 0 12px 0px 0px #95a5a6; /* Sombra "3D" marcada */
-    border: 5px solid #34495e;
+    width: 100%; /* Debe ocupar todo el espacio disponible */
+    /* Centra el contenido de texto */
+    text-align: center; 
+    /* Si el contenedor es demasiado estrecho, esto podría ser necesario */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .pin-display h2 {
@@ -151,4 +151,39 @@
     background-color: #7f8c8d;
     box-shadow: 0 4px 0px 0px #6c757d;
     cursor: not-allowed;
+}
+
+/* 1. Estilos del Contenedor (Asegura el centrado de los ítems) */
+.player-list-lobby {
+    list-style: none;
+    padding: 0; 
+    margin: 15px 0;
+    
+    display: flex;
+    flex-direction: column; 
+    align-items: center; /* ESTO CENTRA CADA ITEM HORIZONTALMENTE */
+    
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* 2. Estilos de Cada Nombre (Ajustamos el color para que coincida con la imagen 'JUAN') */
+.player-list-lobby li {
+    /* Color de fondo: Un púrpura/azul oscuro más similar a la imagen 'JUAN' */
+    background-color: #5c6bc0; /* Color aproximado para el azul vibrante */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    
+    /* Centra el texto dentro del botón */
+    text-align: center; 
+    
+    /* Mantenemos un ancho fijo para uniformidad */
+    width: 80%; 
+    max-width: 300px; 
+    margin-bottom: 8px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
