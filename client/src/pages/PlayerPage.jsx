@@ -1,4 +1,4 @@
-// client/src/pages/PlayerPage.jsx - CÓDIGO FINAL RESUELTO
+// client/src/pages/PlayerPage.jsx - CÓDIGO COMPLETO Y CORREGIDO
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useGlobalContext } from '../context/GlobalContext';
@@ -6,33 +6,28 @@ import { useSocket } from '../hooks/useSocket';
 import '../style/PlayerPage.css'; 
 
 function PlayerPage() {
-    // 1. Hook para obtener el estado y funciones globales
     const { session, updateSession, logout } = useGlobalContext();
     const { emit, on, socketId } = useSocket(); 
     
-    // Estados locales para el formulario de unión (solo usados si la sesión está vacía)
+    // Estados locales para el formulario
     const [pinInput, setPinInput] = useState(session.gamePin || '');
     const [nicknameInput, setNicknameInput] = useState(session.nickname || '');
 
     // Ref para almacenar los valores VALIDADOS al momento de emitir la unión
     const joinDataRef = useRef({ pin: session.gamePin, nickname: session.nickname });
 
-    // 2. Estados locales del juego (para gestionar la UI durante la partida)
+    // Estados locales del juego
     const [currentQuestion, setCurrentQuestion] = useState(null);
     const [hasAnswered, setHasAnswered] = useState(false);
     const [feedback, setFeedback] = useState('');
     const [leaderboard, setLeaderboard] = useState([]);
     const [isGameOver, setIsGameOver] = useState(false); 
     
-    // Variables de sesión (lectura directa del contexto)
+    // Variables de sesión
     const gamePin = session.gamePin;
     const nickname = session.nickname;
 
-    // ----------------------------------------------------
-    // --- LÓGICA DE EVENTOS ---
-    // ----------------------------------------------------
-
-    // Función para el envío de respuesta
+    // Función de envío de respuesta
     const handleAnswerSubmit = (answerIndex) => { 
         if (!gamePin || !nickname || hasAnswered) return;
 
@@ -47,16 +42,17 @@ function PlayerPage() {
         setFeedback('¡Respuesta enviada! Esperando al anfitrión...');
     };
     
-    // FUNCIÓN DE SALIDA CENTRALIZADA
+    // FUNCIÓN DE LIMPIEZA CENTRALIZADA (CORREGIDA)
     const handleLogout = (notifyServer = true) => {
-        if (notifyServer && gamePin && emit) {
+        if (notifyServer && emit) {
             // CRÍTICO: Notificar al servidor para eliminar al jugador del juego
             emit('leave-current-role'); 
         }
+        // Nota: NO LLAMAMOS a disconnect() aquí.
         logout(); // Limpiar sesión (gamePin: null, view: 'home', etc.)
     };
     
-    // Función de unión al juego (solo se llama desde el formulario)
+    // Función de unión al juego
     const handleJoinGame = () => { 
         const pin = pinInput.trim();
         const nick = nicknameInput.trim();
@@ -65,61 +61,50 @@ function PlayerPage() {
             return alert('Por favor, ingresa el PIN y un apodo.');
         }
         
-        // Guardar datos validados en Ref (en caso de que el socket se reconecte)
         joinDataRef.current = { pin, nickname: nick }; 
         
         setPinInput(pin);
         setNicknameInput(nick);
         
-        // Emitir evento para unirse
         emit('join-game', { pin: pin, nickname: nick });
     };
 
-    // ----------------------------------------------------
-    // --- EFECTOS DE SINCRONIZACIÓN DE SOCKETS ---
-    // ----------------------------------------------------
-
-    // Efecto 1: Sincronizar el socketId en la sesión global
+    // Efecto para guardar el socketId en la sesión global
     useEffect(() => {
-        if (socketId && session.userId !== socketId) {
-            updateSession({ userId: socketId, isLoggedIn: true });
+        if (socketId && session.socketId !== socketId) {
+            updateSession({ socketId });
         }
-    }, [socketId, updateSession, session.userId]);
+    }, [socketId, updateSession, session.socketId]);
 
-
-    // Efecto 2: Listener de eventos de juego
+    // Efecto para listeners de Socket.IO
     useEffect(() => {
         
-        on('join-success', (data) => {
-            // Si el servidor confirma la unión, actualizamos la sesión global
-            updateSession({ 
-                isLoggedIn: true, 
-                gamePin: joinDataRef.current.pin,
-                nickname: joinDataRef.current.nickname,
-                view: 'player', 
-            });
-            // NOTA: Si el juego ya está avanzado, el host enviará la pregunta o el leaderboard inmediatamente.
+        on('join-success', () => {
+             updateSession({ 
+                 isLoggedIn: true, 
+                 gamePin: joinDataRef.current.pin,
+                 nickname: joinDataRef.current.nickname,
+                 view: 'player', 
+             });
         });
         
         on('error-message', (message) => {
-            alert(message);
-            // Si hay un error, volvemos al formulario/limpiamos la sesión
-            if (!gamePin) handleLogout(false);
+             alert(message);
         });
         
         on('next-question', (question) => {
-            setCurrentQuestion(question); 
-            setHasAnswered(false); 
-            setFeedback('Elige una opción:');
-            setLeaderboard([]); 
-            setIsGameOver(false);
+             setCurrentQuestion(question); 
+             setHasAnswered(false); 
+             setFeedback('Elige una opción:');
+             setLeaderboard([]); 
+             setIsGameOver(false);
         });
         
         on('answer-result', ({ isCorrect, newScore }) => {
-            const message = isCorrect 
-                ? `¡Correcto! Tu nuevo puntaje es: ${newScore}` 
-                : `Incorrecto. Tu puntaje actual es: ${newScore}`;
-            setFeedback(message);
+             const message = isCorrect 
+                 ? `¡Correcto! Tu nuevo puntaje es: ${newScore}` 
+                 : `Incorrecto. Tu puntaje actual es: ${newScore}`;
+             setFeedback(message);
         });
 
         on('update-leaderboard', (scores) => {
@@ -128,9 +113,9 @@ function PlayerPage() {
         });
 
         on('game-over', (finalScores) => {
-            setCurrentQuestion(null);
-            setLeaderboard(finalScores);
-            setIsGameOver(true);
+             setCurrentQuestion(null);
+             setLeaderboard(finalScores);
+             setIsGameOver(true);
         });
         
         on('game-closed', (data) => {
@@ -138,19 +123,13 @@ function PlayerPage() {
             handleLogout(false); // Sale sin notificar de nuevo al servidor
         });
         
-        // Limpieza de listeners al desmontar
-        return () => {
-            // No es estrictamente necesario con 'useSocket', pero buena práctica.
-            // Los listeners se gestionan internamente en el useSocket.
-        };
-        
-    }, [on, updateSession, logout, gamePin]); 
+    }, [on, updateSession, logout]); 
 
     // ----------------------------------------------------
     // --- LÓGICA DE RENDERIZADO ---
     // ----------------------------------------------------
 
-    // 1. Formulario de Ingreso (Se muestra si no hay PIN o Nickname en la sesión)
+    // 1. Formulario de Ingreso
     if (!gamePin || !nickname) { 
         return (
             <div className="player-container entry-view"> 
@@ -185,17 +164,17 @@ function PlayerPage() {
                           </li>
                       ))}
                  </ol>
-                  {/* CRÍTICO: Botón de salida que notifica al servidor */}
-                   <button className="back-button" onClick={handleLogout}> 
-                       Salir del Juego 
-                   </button>
+                 {/* CRÍTICO: Botón de salida que notifica al servidor */}
+                  <button className="back-button" onClick={handleLogout}> 
+                      Salir del Juego 
+                  </button>
               </div>
           );
     }
     
-    // 3. Renderizado de Leaderboard (Tabla de Posiciones entre preguntas)
+    // 3. Renderizado de Leaderboard (Tabla de Posiciones)
     if (leaderboard.length > 0) { 
-          const myScore = leaderboard.find(p => p.id === session.userId)?.score || 0;
+          const myScore = leaderboard.find(p => p.id === session.socketId)?.score || 0;
           
           return (
               <div className="player-container lobby-view"> 
@@ -213,34 +192,33 @@ function PlayerPage() {
           );
     }
 
-    // 4. Pregunta Activa
     if (currentQuestion) { 
-          return (
-              <div className="player-container game-view">
-                  <div className="question-display-box"> 
-                      <h1 className="question-text-player">{currentQuestion.text}</h1> 
-                  </div>
-                  
-                  <p className="feedback-message">{feedback}</p>
-                  
-                  {/* Opciones de respuesta */}
-                  <div className="answer-grid"> 
-                      {currentQuestion.options.map((optionText, index) => (
-                          <button
-                              key={index}
-                              onClick={() => handleAnswerSubmit(index)} 
-                              disabled={hasAnswered} 
-                              className={`answer-button color-${index}`} 
-                          >
-                              {optionText} 
-                          </button>
-                      ))}
-                  </div>
-              </div>
-          );
+        return (
+            <div className="player-container game-view">
+                <div className="question-display-box"> 
+                    <h1 className="question-text-player">{currentQuestion.text}</h1> 
+                </div>
+                
+                <p className="feedback-message">{feedback}</p>
+                
+                {/* Opciones de respuesta */}
+                <div className="answer-grid"> 
+                    {currentQuestion.options.map((optionText, index) => (
+                        <button
+                            key={index}
+                            onClick={() => handleAnswerSubmit(index)} 
+                            disabled={hasAnswered} 
+                            className={`answer-button color-${index}`} 
+                        >
+                            {optionText} 
+                        </button>
+                    ))}
+                </div>
+            </div>
+        );
     }
     
-    // 5. Lobby de espera (Renderizado Final: Después de unirse pero antes de la primera pregunta)
+    // 5. Lobby de espera (Renderizado Final)
     return (
         <div className="player-container lobby-view"> 
             <h1 className="kahoot-title-player">¡Te has unido!</h1> 

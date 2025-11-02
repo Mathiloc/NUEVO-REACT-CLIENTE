@@ -5,23 +5,6 @@ import { useGlobalContext } from '../context/GlobalContext';
 import { useSocket } from '../hooks/useSocket'; 
 import '../style/HostPage.css';
 
-// todas las llamadas a socket deben estar en su carpeta correspondiente (contexts o hooks)- esto seria como un controller que se encarga de manejar la logica de estados
-
-// debes separadas otra capa de model para manejar todos los llamados (en esta parte es mas simple que en backend porque unicamente llamas al backend via socket o fetch)
-
-/*
-si deseas puedes manejar una capa de service desacoplando la logica de socket en un archivo aparte y exportar las funciones que necesites (pero personalmente no lo veo necesario en este caso ya que las logicas
- mas pesadas las manejas en el backend)
-
- */
-
-// es una buena practica porque no repites su socket en cada componente y puedes manejar mejor la logica de conexion, reconexion, manejo de errores, etc.
-
-
-// considera leer los datos del jugador desde un contexto global (GlobalContext.jsx)
-
-
-
 function HostPage() {
     const { session, updateSession, logout } = useGlobalContext();
     // NO usamos disconnect aquí
